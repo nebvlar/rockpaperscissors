@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="eng">
+   
+
+<head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Faster+One&family=Gruppo&display=swap" rel="stylesheet">  
+        <script src="https://kit.fontawesome.com/b16beb135a.js" crossorigin="anonymous"></script>
+        <title>Rock Paper Scissors</title>
+    </head>
+</html>
+
+<body>
+    
+    <div class="heading">
+        <h2 class="title">Rock | Paper | Scissors</h2>
+        <h3 class="subheading">First to 5 wins</h3>
+    </div>
+
+   <div class="selection">
+    <div class="optionBox">
+        <button id="rockButton" value="rock" class="btn">
+            <img src="images/rock.png" width="150" height="150" alt="rock image">
+        </button>
+        <button id="paperButton" value="paper" class="btn">
+            <img src="images/paper.png" width="150" height="150" alt="paper image">
+        </button>
+        <button id="scissorsButton" value="scissors" class="btn">
+            <img src="images/scissors.png" width="150" height="150" alt="rock image">
+        </button>
+    </div>
+ </div>
+
+ <div class="scoreboard">
+     <div class="yourScore">
+         <h3 class="yourScoreLabel">Your Score</h3>
+         <h4 class="playerScore">0</h4>
+     </div>
+     <div class="theirScore">
+         <h3 class="computerScoreLabel">Computer Score</h3>
+         <h4 class="computerScore">0</h4>
+     </div>
+ </div>
+
+ <div class="resultBox">
+     <div class="res">
+        <div class="computerBox">
+            <h3 class="computerChoiceLabel">Computer Choice</h3>
+            <img class="computerChoice" src="images/paper.png" height="150" width="150" alt="paper image">
+        </div>
+        <div class="description">
+            <h3 class="resultsLabel">Results</h3>
+            <h4 class="results">Choose an option to begin.</h4>
+        </div>
+    </div>
+    </div>
+ </div>
+
+
+ <div class="container">
+     <button class="reset">Reset</button>
+ </div>
+
+   <script src="script.js"></script> 
+</body>
