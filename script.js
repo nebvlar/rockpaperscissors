@@ -1,58 +1,94 @@
-//Naming variables to add events
+const buttons = document.querySelectorAll('.btn');
+const resultText = document.querySelector('.results');
+const reset = document.querySelector('.reset')
 
-//Buttons:
-const btn = document.querySelectorAll(".btn"); //adds all of the option buttons 
-const reset = document.querySelector(".reset"); //adds reset button
-
-//Text boxes:
-const userScore = document.querySelector(".playerScore"); //adds player score text 
-const compScore = document.querySelector(".computerScore"); //adds computer score text
-const roundResults = document.querySelector(".roundResults"); //adds result text box
-
-//score variables
-let computerScore = 0;
 let playerScore = 0;
+let computerScore = 0;
+let round = 0;
 
-//setting the text into the boxes
-compScore.textContent = `${computerScore}`; //updates the computer score as points are gained
-userScore.textContent = `${playerScore}`; //updates the player score as points are gained
-roundResults.textContent = "Choose an option to begin."; //Adds text into the round result box to begin with
-
-//reset button 
-reset.addEventListener('click', () => location.reload()); //When you click the reset button it refreshes
-
-//computer random option generator
+function countRounds(){
+    round += 1;
+    return round;
+}
 function computerPlay(){
-    const choice = ["rock", "paper", "scissors"]; //Creates an array of the 3 choices
-    const computerSelection = choice[Math.floor(Math.random() * choice.length)]; //chooses a random option from the array
-    const img = document.querySelector(".computerChoice") //selects where the computer selection option image goes
+    const options = ['rock', 'paper', 'scissors'];
+    const computerSelection = options[Math.floor(Math.random() * options.length)];
+    const computerIcon = document.querySelector('.computerChoice');
+
     if (computerSelection == "rock"){
-        img.src = "images/rock.png"  //Changes the image to rock if rock is generated
+        computerIcon.src="images/rock.png";
     } else if (computerSelection == "paper"){
-        img.src = "images/paper.png" //Changes the image to paper if paper is generated
+        computerIcon.src="images/paper.png";
     } else if (computerSelection == "scissors"){
-        img.src = "images/scissors.png" //changes the image to scissors if scissors is generated
-    } return computerSelection //stops function and returns computerselection
+        computerIcon.src="images/scissors.png";
+    }
+    return computerSelection;
 }
 
-//Playing a round
 function playRound(playerSelection, computerSelection){
-    playerSelection = btn.value //hopefully makes it so choosing a button returns its value and the value becomes the variable
-    computerSelection = computerPlay(); //value of computerplay is computerselection
-    if (playerSelection === computerSelection){ //In the event of a tie
-        roundResults.textContent = "It's a tie!" //Prints the sentence to the roundresults box
-    } else if ((playerSelection == "rock" && computerSelection == "scissors") || //player chooses rock and computer chooses scissors)
-    (playerSelection == "paper" && computerSelection == "rock") || //player chooses paper and computer chooses rock
-    (playerSelection == "scissors" & computerSelection == "paper")){ //player chooses scissors and computer chooses paper
-        playerScore = ++playerScore //players score goes up by one
-        roundResults.textContent = `You win! ${playerSelection} beats ${computerSelection}!` //prints the choices and that the player wins to results
-    } else if ((playerSelection == "rock" && computerSelection == "paper") || //player chooses rock and computer chooses paper
-    (playerSelection == "paper" && computerSelection == "scissors") || //player chooses paper and computer chooses scissors
-    (playerSelection == "scissors" && computerSelection == "rock")){ //player chooses scissors and computer chooses rock
-        computerScore = ++computerScore //computer score goes up by one
-        roundResults.textContent = `You lose! ${computerSelection} beats ${playerSelection}!` //prints the choices and that the player loses to results box
-    } return roundResults.textContent //returns round results
+    switch (true){
+        case (playerSelection === computerSelection):
+            resultText.textContent = "It's a tie!"
+            compScore.textContent = `${computerScore}`;
+            userScore.textContent = `${playerScore}`;
+                break;
+            case (playerSelection === "rock" && computerSelection == "scissors"):
+            case (playerSelection === "paper" && computerSelection === "rock"):
+            case (playerSelection === "scissors" && computerSelection === "paper"):
+                playerScore = ++playerScore    
+                compScore.textContent = `${computerScore}`;
+                userScore.textContent = `${playerScore}`;
+                resultText.textContent = `You win! ${playerSelection} beats ${computerSelection}!`
+                break;
+            case (playerSelection == "rock" && computerSelection == "paper"):
+            case (playerSelection == "paper" && computerSelection == "scissors"):
+            case (playerSelection == "scissors" && computerSelection == "rock"):
+                computerScore = ++computerScore
+                compScore.textContent = `${computerScore}`;
+                userScore.textContent = `${playerScore}`;
+               resultText.textContent = `You lose! ${computerSelection} beats ${playerSelection}!`
+                break;
+   
 }
+}
+const compScore = document.querySelector(".computerScore");
+const userScore = document.querySelector(".playerScore");
+compScore.textContent = `${computerScore}`;
+userScore.textContent = `${playerScore}`;
 
-//event listener to start the game
-btn.forEach(button => {button.addEventListener('click', playRound)}); //when you click the button the playround function is called
+function endGame(playerScore, computerScore){
+    if (playerScore === 5 || computerScore === 5){
+        buttons.forEach((button) => {
+            button.setAttribute('disabled', '');
+        })
+        if (playerScore > computerScore){
+            resultText.textContent = "Congratulations!"
+        } else {
+            resultText.textContent = "Do better next time!"
+        } button.reset.style.visibility = 'visible';
+    } reset.style.visibility = "visible";
+}
+function resetGame(){
+    reset.addEventListener('click', () => {
+        window.location.reload();
+    })
+};
+function playGame(){
+    let playerSelection;
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            if (buttons.value = "rock"){
+                playerSelection = "rock"
+            } else if (buttons.value = "paper"){
+                playerSelection = "paper"
+            } else {
+                playerSelection = "scissors"
+            }
+            countRounds();
+            playRound(playerSelection, computerPlay());
+            endGame(playerScore, computerScore);
+            resetGame();
+        })
+    })
+}
+playGame();
